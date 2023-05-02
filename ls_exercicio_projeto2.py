@@ -3,9 +3,9 @@ import ls_exercicio_projeto2_modulo
 
 contador_para_apresentacao = 0
 dicionario_itens = {
-    'chave': 'valor',
     'chave1': 'valor1',
     'chave2': 'valor2',
+    'chave3': 'valor3',
     }
 
 # LIMPAR O CONSOLE
@@ -39,29 +39,39 @@ while True:
     if input_usuario == '1':
         chave = input('Digite a CHAVE a ser cadastrada: ')
         valor = input('Digite o VALOR da chave a ser cadastrado: ')
+        lista_de_tupla_chave_valor = [(chave, valor)]
+
         if chave in dicionario_itens:
             print(
-            'A CHAVE digitada já está no dicionário, se quiser atualizar \
-            o VALOR dessa CHAVE use a opção "(3) Atualizar item".'
-            )
-        else:
-            dicionario_itens[chave] = valor
-            print(f'A CHAVE "{chave}" e o VALOR "{valor}" foram adicionados com sucesso.')
-            print(dicionario_itens)
+                'A CHAVE digitada já está no dicionário, se quiser '
+                'atualizar o VALOR dessa CHAVE use a opção (3) Atualizar item. '
+                'Pressione qualquer tecla para continuar.'
+                )
             input('Pressione qualquer tecla para continuar: ')
+        else:
+            ls_exercicio_projeto2_modulo.cadastra(dicionario_itens, lista_de_tupla_chave_valor)
+            for chave, valor in dicionario_itens.items():
+                    print(chave + ':' , valor)
+            input('Pressione qualquer tecla para continuar: ')
+        
 
     # BOTÃO 2 - CONSULTA DICIONÁRIO
     elif input_usuario == '2':
         decisao = input('Você gostaria de realizar uma consulta via função? [S]IM ou [N]ÃO? ')
         
         if decisao == 'S' or 's':
-                string_para_exercicio = 'chave1;chave2;chave4'
-                ls_exercicio_projeto2_modulo.consulta(dicionario_itens, string_para_exercicio)
+            string_para_exercicio = 'chave1;chave2;chave4'
+            
+            if dicionario_itens == {}:
+                print('O banco de dados está vazio.') 
+            else:
+                ls_exercicio_projeto2_modulo.consulta(dicionario_itens, string_para_exercicio)   
+                
         
         elif decisao == 'N' or 'n':
             print('\nSão as CHAVES e VALORES cadastradas:')
             if dicionario_itens == {}:
-                print('O banco de cadastro está vazio.')
+                print('O banco de dados está vazio.')
             else:
                 for chave, valor in dicionario_itens.items():
                     print(chave + ':' , valor)
@@ -70,27 +80,31 @@ while True:
         
         input('\nPressione qualquer tecla para continuar: ')
 
-    # 3
+    # BOTÃO 3 - ATUALIZAR ITEM
     elif input_usuario == '3':
-        item_atualizado = input('Digite o novo item que gostaria de atualizar no cadastro: ')
-        indice = input('Digite o índice do item que gostaria de atualizar, "0" acessa o primeiro item, "1" o segundo item e assim por diante: ')
+        chave = input('Digite o nova CHAVE a ser atualizada no banco de dados: ')
+        valor = input('Digite o novo VALOR da nova CHAVE: ')
         
-        try: 
-            dicionario_itens[int(indice)] = item_atualizado
-        except ValueError:
-            print('O input do usuário não é um índice válido.')
-        input('Pressione qualquer tecla para continuar: ')
+        if chave in dicionario_itens:
+            dicionario_itens[chave] = valor
+        else:
+            print('Use a função de CADASTRAR ITEM para introduzir novos itens ao banco de dados.')
 
-    # 4
+    # BOTÃO 4 - EXCLUIR ITEM 
     elif input_usuario == '4':
-        indice = input('Digite o índice do item que gostaria de deletar, "0" acessa o primeiro item, "1" o segundo item e assim em diante: ')
-        try: 
-            dicionario_itens.pop(int(indice))
-        except:
-            print('O input do usuário não é um índice válido.')
-        input('Pressione qualquer tecla para continuar: ')
+        chave = input('Digite a CHAVE a ser deletada no banco de dados: ')
+                
+        if chave in dicionario_itens:
+            dicionario_itens.pop(chave)
+            for chave, valor in dicionario_itens.items():
+                    print(chave + ':' , valor)
+            
+            input('\nPressione qualquer tecla para continuar: ')
+        else:
+            print('Não existe essa CHAVE no banco de dados.')
+            input('\nPressione qualquer tecla para continuar: ')
 
-    # 5
+    # BOTÃO 5 - EXIBIR CADASTRO
     elif input_usuario == '5':
         if dicionario_itens != {}:
             for chave, valor in dicionario_itens.items():
