@@ -23,7 +23,9 @@ def converte_string(string: str):
 def cadastra(dicionario: dict, lista: list):
     """
     SUMÁRIO:
-    Essa função recebe como parâmetros um dicionário e uma lista ...
+    Essa função recebe como parâmetros um dicionário e uma lista de tuplas e adiciona as duas variáveis contidas
+    na tupla de formato "[(chave, valor)]" adiciona ao dicionário no formato "{chave: valor}"
+
     """
     dict1 = {
         chave: valor
@@ -41,6 +43,7 @@ def consulta(dicionario: dict, string: str):
     
     VARIÁVEIS:
     temp -> uma variável do tipo string que existe apenas para salvar a string sem o ';'
+    
     dicionario_temp -> uma variável do tipo dict que cria um dicionário com as chaves fornecidas.
             o valor dessas chaves foi atribuído como '0' pois é irrelevante, a ideia é apenas 
             comparar chaves entre dicionários
@@ -48,13 +51,13 @@ def consulta(dicionario: dict, string: str):
     """
     
     temp = string.split(sep=';')
-    dicionario_temp = {
-        temp[i]: 0 
-        for i in range(0, len(temp), 2)
-        }
-    
-    for chave, valor in dicionario.items():
-        if chave in dicionario_temp:
-            print(f'O VALOR de {chave} é {dicionario_temp[chave]}.')
-        elif chave not in dicionario_temp:
-            print(f'{chave} não está contida nesse dicionário.')
+    lista_temporaria = [
+        item 
+        for item in temp
+        ]
+
+    for i in lista_temporaria:
+        if i in dicionario:
+            print(f'{i}: {dicionario[i]}')
+        else:
+            print(f'O VALOR {i} não está no banco de dados')
